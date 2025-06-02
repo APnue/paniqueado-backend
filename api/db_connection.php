@@ -1,9 +1,9 @@
 <?php
-$host = 'ballast.proxy.rlwy.net'; // Este es el valor de RAILWAY_PRIVATE_DOMAIN
-$port = 3306;
-$user = 'root'; // MYSQLUSER
-$pass = 'MWroSKktNmZigNeuIAyORjggCKArEdhy'; // MYSQL_ROOT_PASSWORD
-$dbname = 'railway'; // MYSQL_DATABASE
+$host = 'ballast.proxy.rlwy.net';
+$port = 16875;
+$user = 'root';
+$pass = 'MWroSKktNmZigNeuIAyORjggCKArEdhy'; 
+$dbname = 'railway'; 
 
 $conexion = new mysqli($host, $user, $pass, $dbname, $port);
 
