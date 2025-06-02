@@ -1,8 +1,8 @@
 <?php
-$host = 'ballast.proxy.rlwy.net';
-$port = 16875;
+$host = 'crossover.proxy.rlwy.net';
+$port = 56848;
 $user = 'root';
-$pass = 'MWroSKktNmZigNeuIAyORjggCKArEdhy'; 
+$pass = 'XTjFdCZuyfSTrBHAbapYseFgMglSOLtG'; 
 $dbname = 'railway'; 
 
 $conexion = new mysqli($host, $user, $pass, $dbname, $port);
