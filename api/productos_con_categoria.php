@@ -8,19 +8,7 @@ header("Access-Control-Allow-Headers: *");
 // Indicar que la respuesta será JSON con codificación UTF-8
 header("Content-Type: application/json; charset=UTF-8");
 
-// Datos para conectarse a la base de datos
-$servername = "fdb1028.awardspace.net";
-$username = "4639680_panaderia";
-$password = "y9SW;CKwQ_rhX33";
-$dbname = "4639680_panaderia";
-
-// Crear la conexión con la base de datos
-$conexion = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar si la conexión falló
-if ($conexion->connect_error) { 
-    die("Connection failed: " . $conexion->connect_error); 
-}
+include 'db_connection.php';
 
 // Consulta para obtener productos con su categoría
 $sql = "SELECT 
