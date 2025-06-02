@@ -1,5 +1,5 @@
 <?php
-$host = 'containers-us-west-98.railway.app'; // Este es el valor de RAILWAY_PRIVATE_DOMAIN
+$host = 'ballast.proxy.rlwy.net'; // Este es el valor de RAILWAY_PRIVATE_DOMAIN
 $port = 3306;
 $user = 'root'; // MYSQLUSER
 $pass = 'MWroSKktNmZigNeuIAyORjggCKArEdhy'; // MYSQL_ROOT_PASSWORD
