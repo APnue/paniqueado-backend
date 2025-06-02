@@ -6,19 +6,7 @@ header("Access-Control-Allow-Methods: POST, OPTIONS");
 // Permitir el encabezado Content-Type para recibir JSON
 header("Access-Control-Allow-Headers: Content-Type");
 
-// Datos para la conexión a la base de datos
-$servername = "fdb1028.awardspace.net";
-$username = "4639680_panaderia";
-$password = "y9SW;CKwQ_rhX33";
-$dbname = "4639680_panaderia";
-
-// Crear la conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar si la conexión falló
-if ($conn->connect_error) { 
-    die("Connection failed: " . $conn->connect_error); 
-}
+include 'db_connection.php';
 
 // Obtener datos enviados en JSON desde la petición
 $data = json_decode(file_get_contents("php://input"), true);
@@ -37,12 +25,12 @@ $sql = "UPDATE productos SET
         WHERE id = $id";
 
 // Ejecutar la consulta y enviar respuesta en JSON según el resultado
-if ($conn->query($sql) === TRUE) {
+if ($conexion->query($sql) === TRUE) {
   echo json_encode(["success" => true]);
 } else {
-  echo json_encode(["success" => false, "error" => $conn->error]);
+  echo json_encode(["success" => false, "error" => $conexion->error]);
 }
 
 // Cerrar la conexión a la base de datos
-$conn->close();
+$conexion->close();
 ?>
