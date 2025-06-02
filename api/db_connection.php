@@ -1,10 +1,11 @@
 <?php
-$servername = "fdb1028.awardspace.net";
-$username = "4639680_panaderia";
-$password = "y9SW;CKwQ_rhX33";
-$dbname = "4639680_panaderia";
+$host = 'containers-us-west-98.railway.app'; // Este es el valor de RAILWAY_PRIVATE_DOMAIN
+$port = 3306;
+$user = 'root'; // MYSQLUSER
+$pass = 'MWroSKktNmZigNeuIAyORjggCKArEdhy'; // MYSQL_ROOT_PASSWORD
+$dbname = 'railway'; // MYSQL_DATABASE
 
-$conexion = new mysqli($servername, $username, $password, $dbname);
+$conexion = new mysqli($host, $user, $pass, $dbname, $port);
 
 if ($conexion->connect_error) {
     die("Conexión fallida: " . $conexion->connect_error);
