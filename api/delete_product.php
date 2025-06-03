@@ -1,47 +1,46 @@
 <?php
+// Mostrar errores en desarrollo
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-// Permitir solicitudes desde cualquier origen
+
+// Headers CORS y JSON
 header("Access-Control-Allow-Origin: *");
-// Permitir solo métodos POST y OPTIONS
 header("Access-Control-Allow-Methods: POST, OPTIONS");
-// Permitir encabezado Content-Type para enviar JSON
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json; charset=UTF-8");
 
+// Responder a preflight
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     http_response_code(200);
     exit();
 }
 
+// Conexión a la base de datos
 include 'db_connection.php';
 
-// Leer datos JSON que vienen en el cuerpo de la petición
+// Leer y decodificar el cuerpo de la solicitud
 $inputJSON = file_get_contents('php://input');
 $input = json_decode($inputJSON, true);
 
-// Obtener el id del producto a eliminar, o null si no viene
-$id = $input['id'] ?? null;
-
-// Validar que se haya recibido el id
-if ($id === null) {
-  echo json_encode(["success" => false, "error" => "No se recibió el id"]);
-  exit();
+// Validar que se recibió el ID
+if (!isset($input['id'])) {
+    echo json_encode(["success" => false, "error" => "No se recibió el id"]);
+    exit();
 }
 
+$id = intval($input['id']); // forzar a número entero
 
-$id = intval($id);
-// Armar la consulta para borrar el producto con ese id
-$sql = "DELETE FROM productos WHERE id = $id";
+// Consulta segura con prepared statement
+$stmt = $conexion->prepare("DELETE FROM productos WHERE id = ?");
+$stmt->bind_param("i", $id);
 
-// Ejecutar la consulta y devolver resultado
-if ($conexion->query($sql) === TRUE) {
-  echo json_encode(["success" => true]);
+if ($stmt->execute()) {
+    echo json_encode(["success" => true]);
 } else {
-  echo json_encode(["success" => false, "error" => $conexion->error]);
+    echo json_encode(["success" => false, "error" => $stmt->error]);
 }
 
-// Cerrar la conexión
+$stmt->close();
 $conexion->close();
 ?>
