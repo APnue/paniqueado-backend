@@ -45,18 +45,17 @@ try {
     $stmt->bind_param("i", $id);
 
     if ($stmt->execute()) {
-        echo json_encode(["success" => true]);
+    echo json_encode(["success" => true]);
+} else {
+    if ($conexion->errno === 1451) { // Código de error para violación de FK en MySQL
+        echo json_encode([
+            "success" => false,
+            "error" => "No puedes eliminar este producto porque ya fue usado en pedidos."
+        ]);
     } else {
-        // Detectar error de clave foránea
-        if (strpos($stmt->error, 'a foreign key constraint fails') !== false) {
-            echo json_encode([
-                "success" => false,
-                "error" => "No puedes eliminar este producto porque ya fue usado en pedidos."
-            ]);
-        } else {
-            throw new Exception("Error al ejecutar la consulta: " . $stmt->error);
-        }
+        throw new Exception("Error al ejecutar la consulta: " . $stmt->error);
     }
+}
 
     $stmt->close();
     $conexion->close();
