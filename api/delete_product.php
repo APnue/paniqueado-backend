@@ -38,7 +38,15 @@ $stmt->bind_param("i", $id);
 if ($stmt->execute()) {
     echo json_encode(["success" => true]);
 } else {
-    echo json_encode(["success" => false, "error" => $stmt->error]);
+    // Verifica si el error es por clave foránea
+    if (strpos($stmt->error, 'a foreign key constraint fails') !== false) {
+        echo json_encode([
+            "success" => false,
+            "error" => "No puedes eliminar este producto porque ya fue usado en pedidos."
+        ]);
+    } else {
+        echo json_encode(["success" => false, "error" => $stmt->error]);
+    }
 }
 
 $stmt->close();
