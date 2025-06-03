@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 // Permitir solicitudes desde cualquier origen
 header("Access-Control-Allow-Origin: *");
 // Permitir solo métodos POST y OPTIONS
@@ -28,7 +31,7 @@ if ($id === null) {
 }
 
 
-
+$id = intval($id);
 // Armar la consulta para borrar el producto con ese id
 $sql = "DELETE FROM productos WHERE id = $id";
 
